@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universo 2215 🌻</title>
+    <title>Para Mi Reina 👑 2215</title>
     <style>
         body { margin: 0; background: #000; color: white; font-family: 'Arial', sans-serif; overflow: hidden; }
         canvas { display: block; position: fixed; top: 0; left: 0; z-index: 1; }
@@ -12,14 +12,16 @@
         .box { display: none; opacity: 0; transition: 1.2s ease; pointer-events: auto; max-width: 85%; }
         .box.visible { display: block; opacity: 1; }
 
-        h1 { font-size: 2.5rem; text-shadow: 0 0 20px #ffeb3b; color: #ffeb3b; margin: 10px 0; }
-        p { font-size: 1.2rem; line-height: 1.4; text-shadow: 0 2px 5px #000; }
+        h1 { font-size: 2.2rem; text-shadow: 0 0 20px #ffeb3b; color: #ffeb3b; margin: 10px 0; }
+        p { font-size: 1.1rem; line-height: 1.5; text-shadow: 0 2px 5px #000; }
 
         .action-btn { background: rgba(0,0,0,0.5); border: 2px solid #ffeb3b; color: #ffeb3b; padding: 15px 40px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; box-shadow: 0 0 15px #ffeb3b; transition: 0.3s; }
         .action-btn:hover { background: #ffeb3b; color: #000; }
 
-        /* 2215 FIJO */
+        /* 2215 FIJO EN LA IZQUIERDA */
         .tag-2215 { position: fixed; bottom: 30px; left: 30px; font-size: 2rem; z-index: 25; color: white; text-shadow: 0 0 10px #fff; font-family: monospace; }
+        
+        #final-card { background: rgba(0,0,0,0.85); padding: 25px; border-radius: 25px; border: 2px solid #ffeb3b; backdrop-filter: blur(10px); max-height: 80vh; overflow-y: auto; }
     </style>
 </head>
 <body>
@@ -29,7 +31,7 @@
     <div class="layer">
         <div id="v1" class="box visible">
             <h1>Flores Amarillas 🌻</h1>
-            <p>Un universo creado para ti.</p>
+            <p>Un universo creado solo para ti.</p>
             <button class="action-btn" onclick="toStep(1, 2)">INICIAR VIAJE ✨</button>
         </div>
 
@@ -40,11 +42,17 @@
         </div>
 
         <div id="v3" class="box">
-            <div style="background: rgba(0,0,0,0.8); padding: 30px; border-radius: 30px; border: 2px solid #ffeb3b;">
-                <h1 style="font-size: 1.8rem;">Te amo mi reina 💜🤍</h1>
-                <p>La distancia no me permite darte tus flores hoy, pero este universo es para ti. Nada nos separará jamás.</p>
-                <div style="font-size: 3rem; margin: 10px 0;">🌻🌻🌻🌻🌻</div>
-                <h2 style="letter-spacing: 10px;">INFINITO</h2>
+            <div id="final-card">
+                <h1 style="font-size: 1.6rem; color: #ffeb3b;">Mami... 💜🤍</h1>
+                <p style="text-align: left; font-size: 1rem;">
+                    Mami hoy 21 de marzo quería darte tus flores amarillas aunque sea de esta forma ya que la distancia no me permite ir a entregarte nada, sabes que lo que siento por ti va mucho más allá que todo esto, perdón por no poder estar contigo o poder enviarte algo.<br><br>
+                    La distancia no cambia nada solo me hace quererte más y querer estar más contigo.<br><br>
+                    Gracias por quedarte, por seguir ahí, por hacerme sentir que vale la pena.<br><br>
+                    Eres mi persona favorita y no importa dónde estemos, siempre voy a elegirte.<br><br>
+                    <span style="display:block; text-align:center; font-size: 1.2rem; font-weight: bold;">Te amo mucho ma 🤍🌼</span>
+                </p>
+                <div style="font-size: 2.5rem; margin: 10px 0;">🌻🌻🌻🌻🌻</div>
+                <h2 style="letter-spacing: 10px; font-size: 1.2rem;">INFINITO</h2>
             </div>
         </div>
     </div>
@@ -66,15 +74,15 @@
             const geo = new THREE.BufferGeometry();
             const positions = [];
             for(let i=0; i<15000; i++) {
-                let dist = 30 + Math.random() * 100;
+                let dist = 30 + Math.random() * 110;
                 let ang = Math.random() * Math.PI * 2;
-                positions.push(dist * Math.cos(ang), (Math.random()-0.5) * 15, dist * Math.sin(ang));
+                positions.push(dist * Math.cos(ang), (Math.random()-0.5) * 18, dist * Math.sin(ang));
             }
             geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
             stars = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xffeb3b, size: 0.6, transparent: true, opacity: 0.8 }));
             s.add(stars);
 
-            // NÚCLEO Y ANILLO
+            // NÚCLEO Y ANILLO ESTILO AGUJERO NEGRO
             const core = new THREE.Mesh(new THREE.SphereGeometry(12, 32, 32), new THREE.MeshBasicMaterial({ color: 0xffeb3b }));
             s.add(core);
             const hole = new THREE.Mesh(new THREE.SphereGeometry(11.5, 32, 32), new THREE.MeshBasicMaterial({ color: 0x000000 }));
@@ -89,7 +97,7 @@
             const txtTex = new THREE.CanvasTexture(txtCanvas);
             code3D = new THREE.Sprite(new THREE.SpriteMaterial({ map: txtTex }));
             code3D.scale.set(40, 20, 1);
-            code3D.position.set(0, 25, 0); 
+            code3D.position.set(0, 28, 0); 
             s.add(code3D);
 
             loop();
@@ -97,15 +105,15 @@
 
         function loop() {
             requestAnimationFrame(loop);
-            stars.rotation.y += 0.001;
-            code3D.position.y = 25 + Math.sin(Date.now() * 0.002) * 3;
+            stars.rotation.y += 0.0012;
+            code3D.position.y = 28 + Math.sin(Date.now() * 0.002) * 4;
             r.render(s, c);
         }
 
         function toStep(out, incoming) {
             document.getElementById('v' + out).classList.remove('visible');
             let move = setInterval(() => {
-                if(c.position.z > 60) c.position.z -= 1.5;
+                if(c.position.z > 65) c.position.z -= 1.5;
                 else clearInterval(move);
             }, 10);
             setTimeout(() => { document.getElementById('v' + incoming).classList.add('visible'); }, 800);
