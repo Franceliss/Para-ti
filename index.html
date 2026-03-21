@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Mi Reina 👑 2215</title>
+    <title>Para Mi Reina 🌻 2215</title>
     <style>
         body { margin: 0; background: #000; color: white; font-family: 'Arial', sans-serif; overflow: hidden; cursor: pointer; }
         canvas { display: block; position: fixed; top: 0; left: 0; z-index: 1; }
         
+        /* Interfaz de usuario */
         .layer { position: fixed; z-index: 10; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; pointer-events: none; text-align: center; padding: 20px; transition: opacity 1s; }
         .box { display: none; flex-direction: column; align-items: center; opacity: 0; transition: opacity 1s; max-width: 500px; padding: 30px; border-radius: 20px; pointer-events: auto; }
         .box.visible { display: flex; opacity: 1; }
@@ -18,11 +19,11 @@
         .action-btn { background: rgba(255, 235, 59, 0.1); border: 2px solid #ffeb3b; color: #ffeb3b; padding: 15px 35px; border-radius: 50px; cursor: pointer; font-size: 1.1rem; text-transform: uppercase; margin-top: 25px; transition: 0.3s; box-shadow: 0 0 15px rgba(255,235,59,0.3); }
         .action-btn:hover { background: #ffeb3b; color: #000; box-shadow: 0 0 30px #ffeb3b; transform: scale(1.05); }
 
-        /* EL CÓDIGO 2215 FIJO ABAJO A LA IZQUIERDA */
+        /* EL CÓDIGO 2215 DOBLE (Arriba y Fijo Abajo Izquierda) */
+        .code-display { font-size: 3.5rem; color: #fff; font-family: monospace; z-index: 20; text-shadow: 0 0 20px #fff; text-align: center; width: 100%; margin: 20px 0; }
         #fixed-code { position: fixed; bottom: 30px; left: 30px; font-size: 2.3rem; font-family: monospace; z-index: 20; text-shadow: 0 0 10px #fff; opacity: 0.7; }
 
-        #final-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 30; background: rgba(0,0,0,0.85); display: none; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 2s; backdrop-filter: blur(10px); text-align: center; }
-        .drawing { font-family: monospace; color: #4caf50; white-space: pre; font-size: 9px; line-height: 10px; margin: 30px 0; }
+        #final-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 30; background: rgba(0,0,0,0.85); display: none; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 2s; backdrop-filter: blur(10px); }
     </style>
 </head>
 <body>
@@ -38,7 +39,7 @@
 
         <div id="v2" class="box">
             <h1 style="color: #ffeb3b;">Estás casi llegando a tu regalo...</h1>
-            <p style="font-size: 1.2rem; opacity: 0.8;">Cada planeta esférico que pasamos es un deseo juntas.</p>
+            <p style="font-size: 1.2rem; opacity: 0.8;">Cada estrella representa un momento juntas.</p>
             <button class="action-btn" onclick="nextStep(2, 3)">Siguiente</button>
         </div>
 
@@ -50,35 +51,21 @@
     </div>
 
     <div id="final-screen">
-        <h1 style="color:#ffeb3b; font-size: 2.2rem;">👑 Te amo mi reina 💜🤍</h1>
-        <p style="max-width: 600px; font-size: 1.1rem; line-height: 1.6;">
+        <div class="code-display">2215 🤍</div>
+        <h1 style="color:#ffeb3b; font-size: 2.2rem; margin-top: 0;">👑 Te amo mi reina 💜🤍</h1>
+        <p style="max-width: 600px; font-size: 1.1rem; line-height: 1.6; text-align: left;">
             Mami hoy 21 de marzo quería darte tus flores amarillas aunque sea de esta forma ya que la distancia no me permite ir a entregarte nada, sabes que lo que siento por ti va mucho más allá que todo esto, perdón por no poder estar contigo o poder enviarte algo.<br><br>
             La distancia no cambia nada solo me hace quererte más y querer estar más contigo.<br><br>
             Gracias por quedarte, por seguir ahí, por hacerme sentir que vale la pena.<br><br>
             Eres mi persona favorita y no importa dónde estemos, siempre voy a elegirte.<br><br>
             <span style="font-weight: bold; color: #ffeb3b;">Te amo mucho ma 🤍🌼</span>
         </p>
-        <div class="drawing">
-         .::::. 
-       .::::::::.
-      :::::::::::🌻 
-      :::::::::::
-       '::::::::' 
-          ::
-        _::_|_ _
-       /   |   \
-      /    |    \
-     |     |     |
-      \____|____/
-           |
-        🌻_|_🌻
-        </div>
-        <div style="font-size: 3rem; letter-spacing: 15px; color: #ffeb3b; text-shadow: 0 0 20px #ffeb3b;">INFINITO</div>
+        <div style="font-size: 3rem; letter-spacing: 15px; color: #ffeb3b; text-shadow: 0 0 20px #ffeb3b; margin-top: 30px;">INFINITO</div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        let scene, camera, renderer, galaxyPoints, velocity = 0.05, portalRing;
+        let scene, camera, renderer, starPoints, velocity = 0.05;
 
         function init() {
             scene = new THREE.Scene();
@@ -88,31 +75,37 @@
             renderer = new THREE.WebGLRenderer({canvas: document.getElementById('canvas'), antialias: true});
             renderer.setSize(window.innerWidth, window.innerHeight);
 
-            // 1. EL PORTAL CENTRAL (Estilo video JCode)
-            const ringGeo = new THREE.TorusGeometry(10, 0.2, 16, 100);
-            const ringMat = new THREE.MeshBasicMaterial({color: 0xffeb3b});
-            portalRing = new THREE.Mesh(ringGeo, ringMat);
-            scene.add(portalRing);
+            // Estrellas de fondo reales y profundas (No cuadros)
+            const starGeo = new THREE.BufferGeometry();
+            const starPos = [];
+            for(let i=0; i<8000; i++) starPos.push(Math.random()*800-400, Math.random()*800-400, Math.random()*800-400);
+            starGeo.setAttribute('position', new THREE.Float32BufferAttribute(starPos, 3));
+            
+            // Usamos un sprite circular para que sean CÍRCULOS suves
+            const starMat = new THREE.PointsMaterial({color: 0xffffff, size: 0.1, transparent: true});
+            const stars = new THREE.Points(starGeo, starMat);
+            scene.add(stars);
 
-            const coreGeo = new THREE.SphereGeometry(9.8, 32, 32);
-            const coreMat = new THREE.MeshBasicMaterial({color: 0x000000});
-            const core = new THREE.Mesh(coreGeo, coreMat);
-            scene.add(core);
-
-            // 2. LA GALAXIA DE ESTRELLAS INTERACTIVA
+            // Galaxia de Partículas (Suves y amarillas)
             const galGeo = new THREE.BufferGeometry();
             const galPos = [];
-            const galColors = [];
             for(let i=0; i<15000; i++) {
                 let r = 50 + Math.random() * 80;
                 let theta = Math.random() * Math.PI * 2;
                 galPos.push(r * Math.cos(theta), (Math.random()-0.5)*15, r * Math.sin(theta));
-                galColors.push(1, 0.9, 0); // Amarillo
             }
             galGeo.setAttribute('position', new THREE.Float32BufferAttribute(galPos, 3));
-            galGeo.setAttribute('color', new THREE.Float32BufferAttribute(galColors, 3));
-            galaxyPoints = new THREE.Points(galGeo, new THREE.PointsMaterial({size: 0.8, vertexColors: true, transparent: true, opacity: 0.8}));
+            
+            // Textura circular y transparente para un brillo suave (Como en el video JCode)
+            const galMat = new THREE.PointsMaterial({color: 0xffeb3b, size: 0.8, transparent: true, opacity: 0.8});
+            galaxyPoints = new THREE.Points(galGeo, galMat);
             scene.add(galaxyPoints);
+
+            // Núcleo brillante (Sol central)
+            const sunMat = new THREE.MeshBasicMaterial({color: 0xffeb3b});
+            const sunGeo = new THREE.SphereGeometry(10, 32, 32);
+            const sun = new THREE.Mesh(sunGeo, sunMat);
+            scene.add(sun);
 
             animate();
         }
@@ -121,7 +114,6 @@
             requestAnimationFrame(animate);
             // El paseo espacial envolvente: la cámara se mueve hacia adelante
             galaxyPoints.rotation.y += 0.001;
-            portalRing.rotation.z += 0.005;
             galaxyPoints.position.z += velocity;
             if(galaxyPoints.position.z > 200) galaxyPoints.position.z = -200;
             renderer.render(scene, camera);
@@ -141,6 +133,7 @@
         }
         function showFinal() {
             nextStep(3, null);
+            document.getElementById('fixed-code').style.display = 'none';
             velocity = 0.01; // Desacelerar para llegar
             setTimeout(() => {
                 const screen = document.getElementById('final-screen');
