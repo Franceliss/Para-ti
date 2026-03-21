@@ -3,74 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viaje a las Estrellas 🌻</title>
+    <title>Viaje Espacial para mi Reina 👑</title>
     <style>
-        body { margin: 0; background: #000; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; }
+        body { margin: 0; background: #000; color: white; font-family: 'Arial', sans-serif; overflow: hidden; }
         canvas { display: block; position: fixed; top: 0; left: 0; z-index: 1; }
-        
-        /* Contenedor principal para evitar que los textos se amontonen */
-        .content-wrapper {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; justify-content: center; align-items: center;
-            z-index: 10; pointer-events: none;
-        }
-
-        .step {
-            display: none; flex-direction: column; align-items: center;
-            text-align: center; padding: 20px; transition: opacity 0.8s; opacity: 0;
-            pointer-events: auto;
-        }
-
-        .step.active { display: flex; opacity: 1; }
-
-        h1 { font-size: 2.5rem; margin-bottom: 10px; text-shadow: 0 0 20px #ffeb3b; color: #ffeb3b; }
-        p { font-size: 1.2rem; margin-bottom: 20px; color: #e0e0e0; }
-
-        .btn {
-            background: transparent; border: 2px solid #ffeb3b; color: #ffeb3b;
-            padding: 12px 30px; border-radius: 50px; cursor: pointer;
-            font-size: 1rem; text-transform: uppercase; letter-spacing: 2px;
-            transition: 0.3s;
-        }
-
-        .btn:hover { background: #ffeb3b; color: #000; transform: scale(1.1); box-shadow: 0 0 20px #ffeb3b; }
-
-        #final-screen {
-            background: rgba(0,0,0,0.85); border-radius: 20px; padding: 40px;
-            max-width: 600px; border: 1px solid rgba(255,235,59,0.3);
-        }
-
-        .drawing { font-family: monospace; color: #4caf50; white-space: pre; font-size: 9px; line-height: 10px; margin: 20px 0; }
+        .interface { position: fixed; z-index: 10; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; pointer-events: none; }
+        .card { background: rgba(0, 0, 0, 0.7); padding: 30px; border-radius: 20px; border: 1px solid #ffeb3b; text-align: center; max-width: 500px; pointer-events: auto; transition: 1s; opacity: 0; display: none; }
+        .card.active { display: block; opacity: 1; }
+        .btn { background: #ffeb3b; color: #000; border: none; padding: 12px 25px; border-radius: 25px; cursor: pointer; font-weight: bold; margin-top: 20px; }
+        .special-code { position: fixed; bottom: 20px; right: 20px; font-family: monospace; opacity: 0.6; z-index: 5; font-size: 1.2rem; }
     </style>
 </head>
 <body>
-    <canvas id="starfield"></canvas>
+    <div class="special-code">2215 🤍</div>
+    <canvas id="space"></canvas>
 
-    <div class="content-wrapper">
-        <div id="step1" class="step active">
-            <h1>Mira hacia las estrellas... ✨</h1>
-            <p>He preparado algo especial para ti.</p>
-            <button class="btn" onclick="changeStep(1, 2)">Comenzar viaje ❤️</button>
+    <div class="interface">
+        <div id="s1" class="card active">
+            <h1>Iniciando paseo espacial... ✨</h1>
+            <p>Mira a tu alrededor, hay un universo entero esperándote.</p>
+            <button class="btn" onclick="go(1, 2)">Explorar Planetas 🚀</button>
         </div>
-
-        <div id="step2" class="step">
-            <h1>Estás cerca...</h1>
-            <p>Cada estrella es un motivo para sonreír.</p>
-            <button class="btn" onclick="changeStep(2, 3)">Siguiente ✨</button>
+        <div id="s2" class="card">
+            <h1 style="color: #4caf50;">Eres mi constelación favorita 🌻</h1>
+            <p>Aunque estemos a miles de kilómetros, compartimos el mismo cielo.</p>
+            <button class="btn" onclick="go(2, 3)">Seguir Viaje ✨</button>
         </div>
-
-        <div id="step3" class="step">
-            <h1>Aunque estemos lejos... 🤍</h1>
-            <p>Nada nos podrá separar jamás.</p>
-            <button class="btn" onclick="changeStep(3, 4)">Ver mi regalo 🌻</button>
-        </div>
-
-        <div id="step4" class="step">
-            <div id="final-screen">
-                <div style="text-align: right; opacity: 0.5; font-size: 0.8rem;">2215</div>
-                <h1>👑 Te amo mi reina 💜🤍</h1>
-                <p>Lamentablemente la distancia no me permite entregarte tus flores pero lo hago por este medio. Quiero que sepas que la distancia ni nada hará que yo me separe de ti, te amo hasta el infinito.</p>
-                <div class="drawing">
+        <div id="s3" class="card">
+            <h1 style="color: #ffeb3b;">👑 Para mi Reina 💜</h1>
+            <p>No puedo darte flores en persona hoy, pero aquí tienes este pequeño universo para ti.</p>
+            <p style="font-size: 0.9rem;">Te amo hasta el infinito y más allá.</p>
+            <div style="color: #4caf50; font-family: monospace; font-size: 8px; white-space: pre;">
          .::::. 
        .::::::::.
       :::::::::::🌻 
@@ -84,70 +47,64 @@
       \____|____/
            |
         🌻_|_🌻
-                </div>
-                <h2 style="color: #ffeb3b; letter-spacing: 4px;">🌻 INFINITO 🌻</h2>
             </div>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        let scene, camera, renderer, stars;
-
+        let scene, camera, renderer, planets = [];
         function init() {
             scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
-            camera.position.z = 1;
-            camera.rotation.x = Math.PI/2;
-
-            renderer = new THREE.WebGLRenderer({canvas: document.getElementById('starfield'), antialias: true});
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({canvas: document.getElementById('space'), antialias: true});
             renderer.setSize(window.innerWidth, window.innerHeight);
 
-            // Crear Galaxia 3D
-            const starGeo = new THREE.BufferGeometry();
-            const positions = [];
-            for(let i=0; i<6000; i++) {
-                positions.push(Math.random() * 600 - 300);
-                positions.push(Math.random() * 600 - 300);
-                positions.push(Math.random() * 600 - 300);
-            }
-            starGeo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-            
-            let sprite = new THREE.TextureLoader().load('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/lensflare/lensflare0_alpha.png');
-            let starMaterial = new THREE.PointsMaterial({ color: 0xaaaaaa, size: 0.7, map: sprite, transparent: true });
-            
-            stars = new THREE.Points(starGeo, starMaterial);
-            scene.add(stars);
+            // Estrellas de fondo
+            const geo = new THREE.BufferGeometry();
+            const pos = [];
+            for(let i=0; i<8000; i++) pos.push((Math.random()-0.5)*1000, (Math.random()-0.5)*1000, (Math.random()-0.5)*1000);
+            geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+            scene.add(new THREE.Points(geo, new THREE.PointsMaterial({color: 0xffffff, size: 0.5})));
 
+            // Crear Planetas 3D
+            const colors = [0xff5722, 0x2196f3, 0x8bc34a, 0xffeb3b, 0x9c27b0];
+            for(let i=0; i<5; i++) {
+                const pGeo = new THREE.SphereGeometry(Math.random()*3 + 1, 32, 32);
+                const pMat = new THREE.MeshPhongMaterial({color: colors[i], emissive: colors[i], emissiveIntensity: 0.2});
+                const planet = new THREE.Mesh(pGeo, pMat);
+                planet.position.set((Math.random()-0.5)*100, (Math.random()-0.5)*100, -Math.random()*150 - 50);
+                planets.push(planet);
+                scene.add(planet);
+            }
+
+            const light = new THREE.PointLight(0xffffff, 1, 500);
+            light.position.set(0, 0, 50);
+            scene.add(light);
+            camera.position.z = 50;
             animate();
         }
 
         function animate() {
-            // Movimiento de galaxia realista
-            stars.rotation.y += 0.0009;
-            stars.position.z += 0.05;
-            if(stars.position.z > 100) stars.position.z = 0;
-
-            renderer.render(scene, camera);
             requestAnimationFrame(animate);
+            planets.forEach((p, i) => {
+                p.rotation.y += 0.01;
+                p.position.z += 0.05; // Los planetas se acercan lentamente
+                if(p.position.z > 50) p.position.z = -150;
+            });
+            renderer.render(scene, camera);
         }
 
-        function changeStep(current, next) {
-            document.getElementById('step' + current).classList.remove('active');
-            // Zoom de cámara al cambiar
-            camera.position.z += 20;
-            
-            setTimeout(() => {
-                document.getElementById('step' + next).classList.add('active');
-            }, 400);
+        function go(c, n) {
+            document.getElementById('s'+c).classList.remove('active');
+            setTimeout(() => { document.getElementById('s'+n).classList.add('active'); }, 500);
+            // Efecto de impulso espacial
+            let timer = setInterval(() => {
+                if(camera.position.z > 20) camera.position.z -= 1;
+                else clearInterval(timer);
+            }, 20);
         }
-
         init();
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
     </script>
 </body>
 </html>
