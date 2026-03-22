@@ -1,149 +1,250 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Mi Reina 🌻 2215</title>
-    <style>
-        body { margin: 0; background: #000; color: white; font-family: 'Arial', sans-serif; overflow: hidden; cursor: pointer; }
-        canvas { display: block; position: fixed; top: 0; left: 0; z-index: 1; }
-        
-        /* Interfaz de usuario */
-        .layer { position: fixed; z-index: 10; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; pointer-events: none; text-align: center; padding: 20px; transition: opacity 1s; }
-        .box { display: none; flex-direction: column; align-items: center; opacity: 0; transition: opacity 1s; max-width: 500px; padding: 30px; border-radius: 20px; pointer-events: auto; }
-        .box.visible { display: flex; opacity: 1; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viaje 2215 🤍</title>
 
-        h1 { font-size: 2.2rem; text-shadow: 0 0 15px #ffeb3b; color: #ffeb3b; }
-        p { font-size: 1.2rem; line-height: 1.6; opacity: 0.8; }
-        
-        .action-btn { background: rgba(255, 235, 59, 0.1); border: 2px solid #ffeb3b; color: #ffeb3b; padding: 15px 35px; border-radius: 50px; cursor: pointer; font-size: 1.1rem; text-transform: uppercase; margin-top: 25px; transition: 0.3s; box-shadow: 0 0 15px rgba(255,235,59,0.3); }
-        .action-btn:hover { background: #ffeb3b; color: #000; box-shadow: 0 0 30px #ffeb3b; transform: scale(1.05); }
+<!-- Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-        /* EL CÓDIGO 2215 DOBLE (Arriba y Fijo Abajo Izquierda) */
-        .code-display { font-size: 3.5rem; color: #fff; font-family: monospace; z-index: 20; text-shadow: 0 0 20px #fff; text-align: center; width: 100%; margin: 20px 0; }
-        #fixed-code { position: fixed; bottom: 30px; left: 30px; font-size: 2.3rem; font-family: monospace; z-index: 20; text-shadow: 0 0 10px #fff; opacity: 0.7; }
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        font-family: 'Poppins', sans-serif;
+        background: black;
+        color: white;
+    }
 
-        #final-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 30; background: rgba(0,0,0,0.85); display: none; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity 2s; backdrop-filter: blur(10px); }
-    </style>
+    /* 2215 arriba */
+    #codeTop {
+        position: fixed;
+        top: 20px;
+        width: 100%;
+        text-align: center;
+        font-size: 40px;
+        font-weight: 800;
+        text-shadow: 0 0 20px white;
+        z-index: 20;
+    }
+
+    /* 2215 abajo */
+    #codeBottom {
+        position: fixed;
+        bottom: 15px;
+        left: 15px;
+        font-size: 22px;
+        opacity: 0.8;
+        z-index: 20;
+    }
+
+    /* contenedor de pantallas */
+    #pantalla {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 900px;
+        text-align: center;
+        font-size: 28px;
+        line-height: 1.5;
+        z-index: 20;
+        text-shadow: 0 0 15px black;
+    }
+
+    /* Botones */
+    .btn {
+        margin-top: 25px;
+        padding: 12px 35px;
+        background: rgba(255,255,255,0.15);
+        border: 2px solid white;
+        border-radius: 8px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        backdrop-filter: blur(6px);
+        transition: .3s;
+    }
+
+    .btn:hover {
+        background: white;
+        color: black;
+    }
+
+    /* mensaje final */
+    #mensajeFinal {
+        display: none;
+        font-size: 22px;
+        background: rgba(0,0,0,0.55);
+        padding: 35px;
+        border-radius: 10px;
+        line-height: 1.6;
+    }
+</style>
 </head>
+
 <body>
-    <div id="fixed-code">2215 🤍</div>
-    <canvas id="canvas"></canvas>
 
-    <div class="layer">
-        <div id="v1" class="box visible">
-            <h1>Feliz día de las<br>Flores Amarillas 🌻</h1>
-            <p>He creado este universo solo para ti.</p>
-            <button class="action-btn" onclick="startJourney()">Comenzar viaje ❤️</button>
-        </div>
+<div id="codeTop">2215 🤍</div>
+<div id="codeBottom">2215 🤍</div>
 
-        <div id="v2" class="box">
-            <h1 style="color: #ffeb3b;">Estás casi llegando a tu regalo...</h1>
-            <p style="font-size: 1.2rem; opacity: 0.8;">Cada estrella representa un momento juntas.</p>
-            <button class="action-btn" onclick="nextStep(2, 3)">Siguiente</button>
-        </div>
+<div id="pantalla">
+    <div id="textoPantalla">Misión iniciada… Conexión establecida entre dos almas.</div>
+    <button id="btnSiguiente" class="btn">SIGUIENTE</button>
+</div>
 
-        <div id="v3" class="box">
-            <h1>Aunque estemos lejos... 🤍</h1>
-            <p style="font-size: 1.2rem; opacity: 0.8;">Nada nos podrá separar jamás.</p>
-            <button class="action-btn" onclick="showFinal()">Ver tu regalo</button>
-        </div>
-    </div>
+<!-- audio legal -->
+<audio id="musica" preload="auto">
+    <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Loyalty_Freak_Music/SPACE_EXPLORATION/Loyalty_Freak_Music_-_01_-_Deep_Space.mp3" type="audio/mpeg">
+</audio>
 
-    <div id="final-screen">
-        <div class="code-display">2215 🤍</div>
-        <h1 style="color:#ffeb3b; font-size: 2.2rem; margin-top: 0;">👑 Te amo mi reina 💜🤍</h1>
-        <p style="max-width: 600px; font-size: 1.1rem; line-height: 1.6; text-align: left;">
-            Mami hoy 21 de marzo quería darte tus flores amarillas aunque sea de esta forma ya que la distancia no me permite ir a entregarte nada, sabes que lo que siento por ti va mucho más allá que todo esto, perdón por no poder estar contigo o poder enviarte algo.<br><br>
-            La distancia no cambia nada solo me hace quererte más y querer estar más contigo.<br><br>
-            Gracias por quedarte, por seguir ahí, por hacerme sentir que vale la pena.<br><br>
-            Eres mi persona favorita y no importa dónde estemos, siempre voy a elegirte.<br><br>
-            <span style="font-weight: bold; color: #ffeb3b;">Te amo mucho ma 🤍🌼</span>
-        </p>
-        <div style="font-size: 3rem; letter-spacing: 15px; color: #ffeb3b; text-shadow: 0 0 20px #ffeb3b; margin-top: 30px;">INFINITO</div>
-    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        let scene, camera, renderer, starPoints, velocity = 0.05;
+<!-- SCRIPT GENERAL -->
+<script>
 
-        function init() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 1, 1000);
-            camera.position.z = 20;
+//////////////////////////////////////////////////////////////////////////////////////
+// GALAXIA 3D – ESTILO INTERSTELLAR
+//////////////////////////////////////////////////////////////////////////////////////
 
-            renderer = new THREE.WebGLRenderer({canvas: document.getElementById('canvas'), antialias: true});
-            renderer.setSize(window.innerWidth, window.innerHeight);
+let scene = new THREE.Scene();
+let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+let renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+document.body.appendChild(renderer.domElement);
 
-            // Estrellas de fondo reales y profundas (No cuadros)
-            const starGeo = new THREE.BufferGeometry();
-            const starPos = [];
-            for(let i=0; i<8000; i++) starPos.push(Math.random()*800-400, Math.random()*800-400, Math.random()*800-400);
-            starGeo.setAttribute('position', new THREE.Float32BufferAttribute(starPos, 3));
-            
-            // Usamos un sprite circular para que sean CÍRCULOS suves
-            const starMat = new THREE.PointsMaterial({color: 0xffffff, size: 0.1, transparent: true});
-            const stars = new THREE.Points(starGeo, starMat);
-            scene.add(stars);
+/* estrellas */
+function crearEstrellas() {
+    const geometry = new THREE.BufferGeometry();
+    const count = 6000;
+    const positions = new Float32Array(count * 3);
 
-            // Galaxia de Partículas (Suves y amarillas)
-            const galGeo = new THREE.BufferGeometry();
-            const galPos = [];
-            for(let i=0; i<15000; i++) {
-                let r = 50 + Math.random() * 80;
-                let theta = Math.random() * Math.PI * 2;
-                galPos.push(r * Math.cos(theta), (Math.random()-0.5)*15, r * Math.sin(theta));
-            }
-            galGeo.setAttribute('position', new THREE.Float32BufferAttribute(galPos, 3));
-            
-            // Textura circular y transparente para un brillo suave (Como en el video JCode)
-            const galMat = new THREE.PointsMaterial({color: 0xffeb3b, size: 0.8, transparent: true, opacity: 0.8});
-            galaxyPoints = new THREE.Points(galGeo, galMat);
-            scene.add(galaxyPoints);
+    for (let i = 0; i < count * 3; i++) {
+        positions[i] = (Math.random() - 0.5) * 900;
+    }
 
-            // Núcleo brillante (Sol central)
-            const sunMat = new THREE.MeshBasicMaterial({color: 0xffeb3b});
-            const sunGeo = new THREE.SphereGeometry(10, 32, 32);
-            const sun = new THREE.Mesh(sunGeo, sunMat);
-            scene.add(sun);
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
-            animate();
+    const material = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 1.2
+    });
+
+    const estrellas = new THREE.Points(geometry, material);
+    scene.add(estrellas);
+}
+
+/* agujero negro */
+function agujeroNegro() {
+    const coreGeo = new THREE.SphereGeometry(4, 32, 32);
+    const coreMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+    const core = new THREE.Mesh(coreGeo, coreMat);
+    scene.add(core);
+
+    const ringGeo = new THREE.RingGeometry(6, 10, 128);
+    const ringMat = new THREE.MeshBasicMaterial({
+        color: 0xffcc88,
+        side: THREE.DoubleSide
+    });
+    const ring = new THREE.Mesh(ringGeo, ringMat);
+    ring.rotation.x = Math.PI / 2;
+    scene.add(ring);
+
+    return ring;
+}
+
+crearEstrellas();
+let anillo = agujeroNegro();
+camera.position.z = 40;
+
+function animar() {
+    requestAnimationFrame(animar);
+    anillo.rotation.z += 0.004;
+    renderer.render(scene, camera);
+}
+animar();
+
+//////////////////////////////////////////////////////////////////////////////////////
+// SISTEMA DE PANTALLAS
+//////////////////////////////////////////////////////////////////////////////////////
+
+let index = 0;
+let textoFinalMostrado = false;
+const musica = document.getElementById("musica");
+
+const pantallas = [
+    "Misión iniciada… Conexión establecida entre dos almas.",
+    "Activando motores",
+    "Saliendo",
+    "Aunque estemos lejos… mi destino siempre apunta hacia ti.",
+    "La distancia solo prueba lo fuerte que es lo nuestro.",
+    "No importa cuántos universos existan… en todos te elegiría a ti.",
+    "Tus recuerdos me acompañan más que cualquier estrella.",
+    "Cada kilómetro que nos separa… es un motivo más para quedarme contigo.",
+    "Tu amor es mi norte, mi ruta, mi 2215.",
+    "Prepárate… tu mensaje especial está por llegar."
+];
+
+const mensajeFinalTexto = 
+`Mami hoy 21 de marzo quería darte tus flores amarillas aunque sea de esta forma ya que la distancia no me permite ir a entregarte nada, sabes que lo que siento por ti va mucho más allá que todo esto, perdón por no poder estar contigo o poder enviarte algo. La distancia no cambia nada solo me hace quererte más y querer estar más contigo. Gracias por quedarte, por seguir ahí, por hacerme sentir que vale la pena. Eres mi persona favorita y no importa dónde estemos, siempre voy a elegirte. Te amo mucho ma🤍🌼`;
+
+const textoPantalla = document.getElementById("textoPantalla");
+const btn = document.getElementById("btnSiguiente");
+const pantalla = document.getElementById("pantalla");
+
+btn.onclick = () => {
+
+    if (index === 0) {
+        musica.currentTime = 3; // empieza desde 0:03
+        musica.play();
+    }
+
+    index++;
+
+    if (index < pantallas.length) {
+        textoPantalla.innerHTML = pantallas[index];
+    } 
+    
+    else if (!textoFinalMostrado) {
+        mostrarMensajeFinal();
+        textoFinalMostrado = true;
+    }
+};
+
+//////////////////////////////////////////////////////////////////////////////////////
+// MENSAJE FINAL LETRA POR LETRA
+//////////////////////////////////////////////////////////////////////////////////////
+
+function mostrarMensajeFinal() {
+    pantalla.innerHTML = `<div id="mensajeFinal"></div>`;
+    let box = document.getElementById("mensajeFinal");
+
+    let i = 0;
+    let velocidad = 35;
+
+    function escribir() {
+        if (i < mensajeFinalTexto.length) {
+            box.innerHTML += mensajeFinalTexto.charAt(i);
+            i++;
+            setTimeout(escribir, velocidad);
         }
+    }
 
-        function animate() {
-            requestAnimationFrame(animate);
-            // El paseo espacial envolvente: la cámara se mueve hacia adelante
-            galaxyPoints.rotation.y += 0.001;
-            galaxyPoints.position.z += velocity;
-            if(galaxyPoints.position.z > 200) galaxyPoints.position.z = -200;
-            renderer.render(scene, camera);
-        }
+    escribir();
+}
 
-        function startJourney() {
-            velocity = 0.3; // El viaje se vuelve rápido
-            nextStep(1, 2);
-        }
-        function nextStep(curr, nxt) {
-            document.getElementById('v' + curr).style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('v' + curr).style.display = 'none';
-                document.getElementById('v' + nxt).style.display = 'flex';
-                setTimeout(() => document.getElementById('v' + nxt).style.opacity = '1', 10);
-            }, 1000);
-        }
-        function showFinal() {
-            nextStep(3, null);
-            document.getElementById('fixed-code').style.display = 'none';
-            velocity = 0.01; // Desacelerar para llegar
-            setTimeout(() => {
-                const screen = document.getElementById('final-screen');
-                screen.style.display = 'flex';
-                setTimeout(() => screen.style.opacity = '1', 10);
-            }, 1500);
-        }
+//////////////////////////////////////////////////////////////////////////////////////
+// RESPONSIVE
+//////////////////////////////////////////////////////////////////////////////////////
 
-        init();
-        window.addEventListener('resize', () => { camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
-    </script>
+window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+
 </body>
 </html>
